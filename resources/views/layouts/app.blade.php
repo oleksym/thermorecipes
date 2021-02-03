@@ -23,7 +23,7 @@
             <!-- Page Heading -->
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+                    <x-input id="search" class="block mt-1 w-full" type="text" name="search" :value="old('search')" autofocus placeholder="Search for..." />
                 </div>
             </header>
 
@@ -31,6 +31,16 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <footer class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 bg-white border-b border-gray-200 text-center">
+                            <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
