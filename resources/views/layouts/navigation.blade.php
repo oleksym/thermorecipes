@@ -83,11 +83,11 @@
 
                 @guest
                     <div class="hidden space-x-4 lg:-my-px lg:ml-10 sm:flex mr-6">
-                        <x-nav-link :href="route('login')" class="hidden xl:flex text-xl" :active="request()->routeIs('login')">
+                        <x-nav-link :href="route('login')" class="text-xl" :active="request()->routeIs('login')">
                             {{ __('Login') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('register')" class="hidden xl:flex text-xl" :active="request()->routeIs('register')">
+                        <x-nav-link :href="route('register')" class="text-xl" :active="request()->routeIs('register')">
                             {{ __('Register') }}
                         </x-nav-link>
 
@@ -129,50 +129,64 @@
                 {{ __('New recipies') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
-                {{ __('My recipies') }}
-            </x-responsive-nav-link>
+            @auth
+                <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
+                    {{ __('My recipies') }}
+                </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
-                {{ __('Add new') }}
-            </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('recipies.create')" :active="request()->routeIs('recipies.create')">
+                    {{ __('Add new') }}
+                </x-responsive-nav-link>
+            @endauth
+
+            @guest
+                <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('Login') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    {{ __('Register') }}
+                </x-responsive-nav-link>
+            @endguest
 
             <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
                 {{ __('Lang') }}
             </x-responsive-nav-link>
         </div>
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="flex items-center px-4">
-                <div class="flex-shrink-0">
-                    <svg class="h-10 w-10 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
+        @auth
+            <!-- Responsive Settings Options -->
+            <div class="pt-4 pb-1 border-t border-gray-200">
+                <div class="flex items-center px-4">
+                    <div class="flex-shrink-0">
+                        <svg class="h-10 w-10 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+
+                    <div class="ml-3">
+                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    </div>
                 </div>
 
-                <div class="ml-3">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="mt-3 space-y-1">
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
+                            {{ __('Profile') }}
+                        </x-responsive-nav-link>
+
+                        <x-responsive-nav-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Logout') }}
+                        </x-responsive-nav-link>
+                    </form>
                 </div>
             </div>
-
-            <div class="mt-3 space-y-1">
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Logout') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
+        @endauth
     </div>
 </nav>
