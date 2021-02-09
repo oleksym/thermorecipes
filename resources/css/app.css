@@ -38,3 +38,10 @@
     animation-name: animate-hide;
     animation-fill-mode: forwards;
 }
+
+.max-w-1\/2 {
+    max-width: 50%;
+}
+.max-50p-h-screen {
+    max-height: 50vh;
+}

@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\RecipiesController;
+use App\Http\Livewire\RecipieEdition;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,8 +22,8 @@ Route::get('/1', function () {
     // TODO
 })->name('tmp');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/recipies/create', [RecipiesController::class, 'create'])->middleware(['auth'])->name('recipies.create');
+Route::get('/recipies/{recipie}/edit', RecipieEdition::class)->middleware(['auth'])->name('recipies.edit');
+Route::get('/images/recipies/{recipie}/{dynamic_filename}', [RecipiesController::class, 'showRecipieImage'])->middleware(['auth'])->name('recipies-images.show');
 
 require __DIR__ . '/auth.php';

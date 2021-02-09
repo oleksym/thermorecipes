@@ -31,6 +31,8 @@
 
             <!-- Page Content -->
             <main>
+                <livewire:alert-message />
+
                 {{ $slot }}
             </main>
 

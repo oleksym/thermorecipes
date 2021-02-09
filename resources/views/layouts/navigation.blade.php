@@ -39,7 +39,7 @@
                             {{ __('My recipies') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('tmp')" class="hidden xl:flex text-xl" :active="request()->routeIs('tmp')">
+                        <x-nav-link :href="route('recipies.create')" class="hidden xl:flex text-xl" :active="request()->routeIs('recipies.create')">
                             {{ __('Add new') }}
                         </x-nav-link>
 
@@ -67,7 +67,7 @@
                                 @csrf
 
                                 <x-dropdown-link :href="route('logout')" class="block xl:hidden text-xl">{{ __('My recipies') }}</x-dropdown-link>
-                                <x-dropdown-link :href="route('logout')" class="block xl:hidden text-xl">{{ __('Add new') }}</x-dropdown-link>
+                                <x-dropdown-link :href="route('recipies.create')" class="block xl:hidden text-xl">{{ __('Add new') }}</x-dropdown-link>
 
                                 <x-dropdown-link :href="route('logout')" class="text-xl">{{ __('Profile') }}</x-dropdown-link>
 
