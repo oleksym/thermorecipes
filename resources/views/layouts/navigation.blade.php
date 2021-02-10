@@ -43,9 +43,9 @@
                             {{ __('Add new') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('tmp')" class="text-xl" :active="request()->routeIs('tmp')">
+{{--                         <x-nav-link :href="route('tmp')" class="text-xl" :active="request()->routeIs('tmp')">
                             {{ __('Lang') }}
-                        </x-nav-link>
+                        </x-nav-link> --}}
                     </div>
 
                     <x-dropdown align="right" width="48">
@@ -91,9 +91,9 @@
                             {{ __('Register') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('tmp')" class="text-xl" :active="request()->routeIs('tmp')">
+                        {{-- <x-nav-link :href="route('tmp')" class="text-xl" :active="request()->routeIs('tmp')">
                             {{ __('Lang') }}
-                        </x-nav-link>
+                        </x-nav-link> --}}
                     </div>
                 @endguest
             </div>
@@ -149,9 +149,9 @@
                 </x-responsive-nav-link>
             @endguest
 
-            <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
+            {{-- <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
                 {{ __('Lang') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
         </div>
 
         @auth
