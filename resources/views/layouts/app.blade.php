@@ -26,13 +26,14 @@
             <!-- Page Heading -->
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <x-input id="search" class="block mt-1 w-full" type="text" name="search" :value="old('search')" autofocus placeholder="Search for..." />
+                    <livewire:main-search />
                 </div>
             </header>
 
             <!-- Page Content -->
             <main>
                 <livewire:alert-message />
+                <livewire:main-search-results />
 
                 {{ $slot }}
             </main>
