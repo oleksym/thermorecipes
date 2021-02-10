@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 use App\Models\Recipie;
+use App\Models\Ingredient;
 use App\Models\IngredientGroup;
 
 class RecipieEdition extends Component
@@ -57,14 +58,14 @@ class RecipieEdition extends Component
         $this->validateOnly($prop);
     }
 
-    public function deleteGroup($group)
+    public function deleteGroup(IngredientGroup $group)
     {
-        array_push($this->temporary_deleted_groups, $group['id']);
+        array_push($this->temporary_deleted_groups, $group->id);
     }
 
-    public function deleteIngredient($ingredient)
+    public function deleteIngredient(Ingredient $ingredient)
     {
-        array_push($this->temporary_deleted_ingredients, $ingredient['id']);
+        array_push($this->temporary_deleted_ingredients, $ingredient->id);
     }
 
     public function deleteFutureImage()
