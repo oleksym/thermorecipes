@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
 use Storage;
+use Image;
 use Illuminate\Support\Str;
 
 class Recipe extends Model
@@ -64,7 +65,11 @@ class Recipe extends Model
 
     public function getImageContent()
     {
-        return Storage::response(self::MAIN_IMAGES_DIRECTORY . $this->image_filename);
+        $img = Image::make(storage_path('app/' . self::MAIN_IMAGES_DIRECTORY) . $this->image_filename);
+        $img->fit(800, 600, function ($constraint) {
+            $constraint->upsize();
+        });
+        return $img->response();
     }
 
     public function getImageUrl()
