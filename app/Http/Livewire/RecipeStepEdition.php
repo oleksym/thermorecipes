@@ -40,6 +40,11 @@ class RecipeStepEdition extends Component
         $this->emitTo('recipe-edition', 'deleteStep', $this->step);
     }
 
+    public function addTag($id)
+    {
+        $this->step->description .= " [ingredient:{$id}]";
+    }
+
     public function save()
     {
         $this->validate();

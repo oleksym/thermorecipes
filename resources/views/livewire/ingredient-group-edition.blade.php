@@ -1,4 +1,4 @@
-<div>
+<div class="ingredient-group">
     <h2 class="text-xl">Ingredient group</h2>
 
     <div class="flex space-x-8">
@@ -7,7 +7,7 @@
             <div>
                 <x-label for="group.title" :value="__('Title')" />
 
-                <x-input wire:model.lazy="group.title" id="group.title" class="block mt-1 w-full" type="text" :value="$group->title" />
+                <x-input wire:model.lazy="group.title" class="block mt-1 w-full" type="text" :value="$group->title" />
 
                 <x-validation-error class="mb-4" :errors="$errors->get('group.title')" />
             </div>
@@ -16,7 +16,7 @@
             <div class="mt-4">
                 <x-label for="group.type" :value="__('Type')" />
 
-                <x-select wire:model.lazy="group.type" id="group.type" class="block mt-1 w-full">
+                <x-select wire:model.lazy="group.type" class="block mt-1 w-full">
                     <option></option>
                     @foreach (App\Models\IngredientGroup::GROUP_TYPES as $group_name => $group_value)
                         <option value="{{ $group_value }}">{{ $group_name }}</option>
@@ -29,7 +29,7 @@
             <div class="mt-4">
                 <x-label for="group.description" :value="__('Description')" />
 
-                <x-textarea wire:model.lazy="group.description" id="group.description" class="block mt-1 w-full">{{ $group->description }}</x-textarea>
+                <x-textarea wire:model.lazy="group.description" class="block mt-1 w-full">{{ $group->description }}</x-textarea>
 
                 <x-validation-error class="mb-4" :errors="$errors->get('group.description')" />
             </div>
