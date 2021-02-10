@@ -56,7 +56,19 @@
                 </x-button>
             </div>
 
-            Steps
+            <div class="mt-4">
+                <span>Steps:</span>
+
+                @foreach ($group->recipeSteps()->orderby('order', 'asc')->get() as $step)
+                    <livewire:recipe-step-edition :step="$step" :key="'step'.$step->id" />
+                @endforeach
+
+                <div class="flex items-center justify-start mt-4">
+                    <x-button type="button" wire:click.prevent="addNewStep" class="bg-red-400">
+                        {{ __('Add step') }}
+                    </x-button>
+                </div>
+            </div>
         </div>
 
     </div>

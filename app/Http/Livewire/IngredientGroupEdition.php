@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\IngredientGroup;
 use App\Models\Ingredient;
+use App\Models\RecipeStep;
 
 class IngredientGroupEdition extends Component
 {
@@ -42,6 +43,13 @@ class IngredientGroupEdition extends Component
         $ingredient = new Ingredient();
         $ingredient->order = $this->group->ingredients()->max('order') + 1;
         $this->group->ingredients()->save($ingredient);
+    }
+
+    public function addNewStep()
+    {
+        $step = new RecipeStep();
+        $step->order = $this->group->recipeSteps()->max('order') + 1;
+        $this->group->recipeSteps()->save($step);
     }
 
     public function deleteGroup()

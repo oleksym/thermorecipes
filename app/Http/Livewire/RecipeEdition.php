@@ -108,7 +108,7 @@ class RecipeEdition extends Component
         }
         $this->recipe->ingredientGroups()->whereIn('id', $this->temporary_deleted_groups)->delete();
         $this->recipe->ingredients()->whereIn(\DB::raw('ingredients.id'), $this->temporary_deleted_ingredients)->delete();
-        $this->recipe->steps()->whereIn(\DB::raw('steps.id'), $this->temporary_deleted_steps)->delete();
+        $this->recipe->steps()->whereIn(\DB::raw('recipe_steps.id'), $this->temporary_deleted_steps)->delete();
 
         $this->recipe->saveImage($this->image);
         $this->recipe->save();
