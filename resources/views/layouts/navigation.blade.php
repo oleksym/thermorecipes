@@ -16,7 +16,7 @@
                         {{ config('app.name') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('tmp')" class="text-xl" :active="request()->routeIs('tmp')">
+                    <x-nav-link :href="route('recipes.index')" class="text-xl" :active="request()->routeIs('recipes.index')">
                         {{ __('All recipes') }}
                     </x-nav-link>
 
@@ -35,7 +35,7 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @auth
                     <div class="hidden space-x-4 lg:-my-px lg:ml-10 sm:flex mr-6">
-                        <x-nav-link :href="route('tmp')" class="hidden xl:flex text-xl" :active="request()->routeIs('tmp')">
+                        <x-nav-link :href="route('recipes.index.my')" class="hidden xl:flex text-xl" :active="request()->routeIs('recipes.index.my')">
                             {{ __('My recipes') }}
                         </x-nav-link>
 
@@ -66,7 +66,7 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
-                                <x-dropdown-link :href="route('logout')" class="block xl:hidden text-xl">{{ __('My recipes') }}</x-dropdown-link>
+                                <x-dropdown-link :href="route('recipes.index.my')" class="block xl:hidden text-xl">{{ __('My recipes') }}</x-dropdown-link>
                                 <x-dropdown-link :href="route('recipes.create')" class="block xl:hidden text-xl">{{ __('Add new') }}</x-dropdown-link>
 
                                 {{-- <x-dropdown-link :href="route('logout')" class="text-xl">{{ __('Profile') }}</x-dropdown-link> --}}
@@ -130,7 +130,7 @@
             </x-responsive-nav-link> --}}
 
             @auth
-                <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
+                <x-responsive-nav-link :href="route('recipes.index.my')" :active="request()->routeIs('recipes.index.my')">
                     {{ __('My recipes') }}
                 </x-responsive-nav-link>
 

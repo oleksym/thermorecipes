@@ -80,6 +80,16 @@ class Recipe extends Model
         return route('recipes-images.show', ['recipe' => $this->id, 'dynamic_filename' => $this->makeDynamicImageFilename()]);
     }
 
+    public function getPreviewRouteAttribute()
+    {
+        return route('recipes.show', $this);
+    }
+
+    public function getDifficultyNameAttribute()
+    {
+        return array_search($this->difficulty, self::DIFFICULTY_LEVELS);
+    }
+
     public function saveImage(?UploadedFile $image)
     {
         if (is_null($image)) {

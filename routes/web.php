@@ -14,15 +14,16 @@ use App\Http\Livewire\RecipeEdition;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [RecipesController::class, 'home'])->name('home');
 
 Route::get('/1', function () {
     // TODO
 })->name('tmp');
 
+Route::get('/recipes', [RecipesController::class, 'index'])->name('recipes.index');
+Route::get('/my-recipes', [RecipesController::class, 'indexMy'])->middleware(['auth'])->name('recipes.index.my');
 Route::get('/recipes/create', [RecipesController::class, 'create'])->middleware(['auth'])->name('recipes.create');
+Route::get('/recipes/{recipe}', [RecipeEdition::class, 'show'])->name('recipes.show');
 Route::get('/recipes/{recipe}/edit', RecipeEdition::class)->middleware(['auth'])->name('recipes.edit');
 Route::get('/images/recipes/{recipe}/{dynamic_filename}', [RecipesController::class, 'showRecipeImage'])->middleware(['auth'])->name('recipes-images.show');
 
