@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Storage;
 use Illuminate\Support\Str;
 
-class Recipie extends Model
+class Recipe extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -19,7 +19,7 @@ class Recipie extends Model
         'MEDIUM' => 2,
         'HARD' => 3,
     ];
-    const MAIN_IMAGES_DIRECTORY = 'recipies/main/';
+    const MAIN_IMAGES_DIRECTORY = 'recipes/main/';
 
     public function user()
     {
@@ -36,9 +36,14 @@ class Recipie extends Model
         return $this->hasManyThrough(Ingredient::class, IngredientGroup::class);
     }
 
+    public function steps()
+    {
+        return $this->hasManyThrough(RecipeStep::class, IngredientGroup::class);
+    }
+
     public function getEditRouteAttribute()
     {
-        return route('recipies.edit', $this);
+        return route('recipes.edit', $this);
     }
 
     public function deleteImage()
@@ -67,7 +72,7 @@ class Recipie extends Model
         if (is_null($this->image_filename)) {
             return null;
         }
-        return route('recipies-images.show', ['recipie' => $this->id, 'dynamic_filename' => $this->makeDynamicImageFilename()]);
+        return route('recipes-images.show', ['recipe' => $this->id, 'dynamic_filename' => $this->makeDynamicImageFilename()]);
     }
 
     public function saveImage(?UploadedFile $image)

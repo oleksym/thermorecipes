@@ -18,13 +18,18 @@ class IngredientGroup extends Model
         'SAUCE' => 3,
     ];
 
-    public function recipie()
+    public function recipe()
     {
-        return $this->belongsTo(Recipie::class);
+        return $this->belongsTo(Recipe::class);
     }
 
     public function ingredients()
     {
         return $this->hasMany(Ingredient::class);
+    }
+
+    public function recipeSteps()
+    {
+        return $this->hasMany(RecipeStep::class);
     }
 }

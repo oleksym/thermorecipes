@@ -5,11 +5,12 @@ namespace App\Http\Livewire;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\WithFileUploads;
 use Livewire\Component;
-use App\Models\Recipie;
+use App\Models\Recipe;
 use App\Models\Ingredient;
 use App\Models\IngredientGroup;
+use App\Models\RecipeStep;
 
-class RecipieEdition extends Component
+class RecipeEdition extends Component
 {
     use AuthorizesRequests;
     use WithFileUploads;
@@ -17,40 +18,42 @@ class RecipieEdition extends Component
     protected $listeners = [
         'deleteGroup' => 'deleteGroup',
         'deleteIngredient' => 'deleteIngredient',
+        'deleteStep' => 'deleteStep',
     ];
-    public $recipie;
+    public $recipe;
     public $image;
     public $delete_image_flag = false;
     public $temporary_deleted_groups = [];
     public $temporary_deleted_ingredients = [];
+    public $temporary_deleted_steps = [];
 
     public function rules()
     {
         return [
-            'recipie.title' => 'nullable|max:255',
-            'recipie.duration' => 'nullable|numeric|min:0|max:10000',
-            'recipie.source' => 'nullable|max:2048',
-            'recipie.difficulty' => 'nullable|in:' . collect(Recipie::DIFFICULTY_LEVELS)->values()->implode(','),
+            'recipe.title' => 'nullable|max:255',
+            'recipe.duration' => 'nullable|numeric|min:0|max:10000',
+            'recipe.source' => 'nullable|max:2048',
+            'recipe.difficulty' => 'nullable|in:' . collect(Recipe::DIFFICULTY_LEVELS)->values()->implode(','),
             'image' => 'nullable|image|max:4096',
-            'recipie.description' => 'nullable|max:4000',
+            'recipe.description' => 'nullable|max:4000',
         ];
     }
 
-    public function mount(Recipie $recipie)
+    public function mount(Recipe $recipe)
     {
-        $this->authorize('update', $recipie);
+        $this->authorize('update', $recipe);
 
-        $this->recipie = $recipie;
+        $this->recipe = $recipe;
     }
 
-    public function updatedRecipieDuration($value)
+    public function updatedRecipeDuration($value)
     {
-        $this->recipie->duration = $value ?: null;
+        $this->recipe->duration = $value ?: null;
     }
 
-    public function updatedRecipieDifficulty($value)
+    public function updatedRecipeDifficulty($value)
     {
-        $this->recipie->difficulty = $value ?: null;
+        $this->recipe->difficulty = $value ?: null;
     }
 
     public function updated($prop, $value)
@@ -68,6 +71,11 @@ class RecipieEdition extends Component
         array_push($this->temporary_deleted_ingredients, $ingredient->id);
     }
 
+    public function deleteStep(RecipeStep $step)
+    {
+        array_push($this->temporary_deleted_steps, $step->id);
+    }
+
     public function deleteFutureImage()
     {
         $this->image = null;
@@ -80,44 +88,46 @@ class RecipieEdition extends Component
     public function unpublish()
     {
         $this->validate();
-        $this->recipie->published_at = null;
-        $this->recipie->save();
+        $this->recipe->published_at = null;
+        $this->recipe->save();
     }
 
     public function publish()
     {
         $this->validate();
-        $this->recipie->published_at = now();
-        $this->recipie->save();
+        $this->recipe->published_at = now();
+        $this->recipe->save();
     }
 
     public function save()
     {
         $this->validate();
         if ($this->delete_image_flag) {
-            $this->recipie->deleteImage();
+            $this->recipe->deleteImage();
             $this->delete_image_flag = false;
         }
-        $this->recipie->ingredientGroups()->whereIn('id', $this->temporary_deleted_groups)->delete();
-        $this->recipie->ingredients()->whereIn(\DB::raw('ingredients.id'), $this->temporary_deleted_ingredients)->delete();
+        $this->recipe->ingredientGroups()->whereIn('id', $this->temporary_deleted_groups)->delete();
+        $this->recipe->ingredients()->whereIn(\DB::raw('ingredients.id'), $this->temporary_deleted_ingredients)->delete();
+        $this->recipe->steps()->whereIn(\DB::raw('steps.id'), $this->temporary_deleted_steps)->delete();
 
-        $this->recipie->saveImage($this->image);
-        $this->recipie->save();
+        $this->recipe->saveImage($this->image);
+        $this->recipe->save();
         $this->image = null;
         $this->emit('saveGroup');
         $this->emit('saveIngredient');
+        $this->emit('saveStep');
         $this->emit('sendAlert', 'success', __('Saved'));
     }
 
     public function addNewIngredientGroup()
     {
         $group = new IngredientGroup();
-        $group->order = $this->recipie->ingredientGroups()->max('order') + 1;
-        $this->recipie->ingredientGroups()->save($group);
+        $group->order = $this->recipe->ingredientGroups()->max('order') + 1;
+        $this->recipe->ingredientGroups()->save($group);
     }
 
     public function render()
     {
-        return view('livewire.recipie-edition');
+        return view('livewire.recipe-edition');
     }
 }

@@ -31,7 +31,7 @@ class Registration extends Component
     public function redirectAfterRegistration()
     {
         Auth::check() || abort(401);
-        session()->flash('message', __('Hello chef! Now Thermorecipies world is yours :)'));
+        session()->flash('message', __('Hello chef! Now Thermorecipes world is yours :)'));
         return redirect()->route('home');
     }
 

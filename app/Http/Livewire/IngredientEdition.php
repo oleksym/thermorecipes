@@ -29,7 +29,7 @@ class IngredientEdition extends Component
 
     public function mount(Ingredient $ingredient)
     {
-        $this->authorize('update', $ingredient->ingredientGroup->recipie);
+        $this->authorize('update', $ingredient->ingredientGroup->recipe);
 
         $this->ingredient = $ingredient;
     }
@@ -41,7 +41,7 @@ class IngredientEdition extends Component
 
     public function deleteIngredient()
     {
-        $this->emitTo('recipie-edition', 'deleteIngredient', $this->ingredient);
+        $this->emitTo('recipe-edition', 'deleteIngredient', $this->ingredient);
     }
 
     public function save()

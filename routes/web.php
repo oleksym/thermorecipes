@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RecipiesController;
-use App\Http\Livewire\RecipieEdition;
+use App\Http\Controllers\RecipesController;
+use App\Http\Livewire\RecipeEdition;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,8 +22,8 @@ Route::get('/1', function () {
     // TODO
 })->name('tmp');
 
-Route::get('/recipies/create', [RecipiesController::class, 'create'])->middleware(['auth'])->name('recipies.create');
-Route::get('/recipies/{recipie}/edit', RecipieEdition::class)->middleware(['auth'])->name('recipies.edit');
-Route::get('/images/recipies/{recipie}/{dynamic_filename}', [RecipiesController::class, 'showRecipieImage'])->middleware(['auth'])->name('recipies-images.show');
+Route::get('/recipes/create', [RecipesController::class, 'create'])->middleware(['auth'])->name('recipes.create');
+Route::get('/recipes/{recipe}/edit', RecipeEdition::class)->middleware(['auth'])->name('recipes.edit');
+Route::get('/images/recipes/{recipe}/{dynamic_filename}', [RecipesController::class, 'showRecipeImage'])->middleware(['auth'])->name('recipes-images.show');
 
 require __DIR__ . '/auth.php';
