@@ -43,7 +43,7 @@
 
                 <div class="flex items-center justify-start mt-4">
                     <x-button type="button" wire:click.prevent="addNewIngredient" class="bg-red-400">
-                        {{ __('Add new') }}
+                        {{ __('Add ingredient') }}
                     </x-button>
                 </div>
             </div>
