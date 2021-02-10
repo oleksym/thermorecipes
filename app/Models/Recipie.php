@@ -26,6 +26,11 @@ class Recipie extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function ingredientGroups()
+    {
+        return $this->hasMany(IngredientGroup::class);
+    }
+
     public function getEditRouteAttribute()
     {
         return route('recipies.edit', $this);

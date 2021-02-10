@@ -6,12 +6,16 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 use App\Models\Recipie;
+use App\Models\IngredientGroup;
 
 class RecipieEdition extends Component
 {
     use AuthorizesRequests;
     use WithFileUploads;
 
+    protected $listeners = [
+        'refreshRecipie' => 'render'
+    ];
     public $recipie;
     public $image;
     public $delete_image_flag = false;
@@ -26,6 +30,13 @@ class RecipieEdition extends Component
             'image' => 'nullable|image|max:4096',
             'recipie.description' => 'nullable|max:4000',
         ];
+    }
+
+    public function mount(Recipie $recipie)
+    {
+        $this->authorize('update', $recipie);
+
+        $this->recipie = $recipie;
     }
 
     public function updatedRecipieDuration($value)
@@ -43,13 +54,6 @@ class RecipieEdition extends Component
         $this->validateOnly($prop);
     }
 
-    public function mount(Recipie $recipie)
-    {
-        $this->authorize('update', $recipie);
-
-        $this->recipie = $recipie;
-    }
-
     public function deleteFutureImage()
     {
         $this->image = null;
@@ -58,6 +62,19 @@ class RecipieEdition extends Component
     public function deleteImage()
     {
         $this->delete_image_flag = true;
+    }
+    public function unpublish()
+    {
+        $this->validate();
+        $this->recipie->published_at = null;
+        $this->recipie->save();
+    }
+
+    public function publish()
+    {
+        $this->validate();
+        $this->recipie->published_at = now();
+        $this->recipie->save();
     }
 
     public function save()
@@ -70,7 +87,15 @@ class RecipieEdition extends Component
         $this->recipie->saveImage($this->image);
         $this->recipie->save();
         $this->image = null;
+        $this->emit('saveGroup');
         $this->emit('sendAlert', 'success', __('Saved'));
+    }
+
+    public function addNewIngredientGroup()
+    {
+        $group = new IngredientGroup();
+        $group->order = $this->recipie->ingredientGroups()->max('order') + 1;
+        $this->recipie->ingredientGroups()->save($group);
     }
 
     public function render()
