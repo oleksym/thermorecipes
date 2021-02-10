@@ -14,11 +14,14 @@ class RecipieEdition extends Component
     use WithFileUploads;
 
     protected $listeners = [
-        'refreshRecipie' => 'render'
+        'deleteGroup' => 'deleteGroup',
+        'deleteIngredient' => 'deleteIngredient',
     ];
     public $recipie;
     public $image;
     public $delete_image_flag = false;
+    public $temporary_deleted_groups = [];
+    public $temporary_deleted_ingredients = [];
 
     public function rules()
     {
@@ -54,6 +57,16 @@ class RecipieEdition extends Component
         $this->validateOnly($prop);
     }
 
+    public function deleteGroup($group)
+    {
+        array_push($this->temporary_deleted_groups, $group['id']);
+    }
+
+    public function deleteIngredient($ingredient)
+    {
+        array_push($this->temporary_deleted_ingredients, $ingredient['id']);
+    }
+
     public function deleteFutureImage()
     {
         $this->image = null;
@@ -84,10 +97,14 @@ class RecipieEdition extends Component
             $this->recipie->deleteImage();
             $this->delete_image_flag = false;
         }
+        $this->recipie->ingredientGroups()->whereIn('id', $this->temporary_deleted_groups)->delete();
+        $this->recipie->ingredients()->whereIn(\DB::raw('ingredients.id'), $this->temporary_deleted_ingredients)->delete();
+
         $this->recipie->saveImage($this->image);
         $this->recipie->save();
         $this->image = null;
         $this->emit('saveGroup');
+        $this->emit('saveIngredient');
         $this->emit('sendAlert', 'success', __('Saved'));
     }
 

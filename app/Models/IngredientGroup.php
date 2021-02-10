@@ -22,4 +22,9 @@ class IngredientGroup extends Model
     {
         return $this->belongsTo(Recipie::class);
     }
+
+    public function ingredients()
+    {
+        return $this->hasMany(Ingredient::class);
+    }
 }

@@ -1,6 +1,6 @@
 <div>
-    <h2 class="text-xl">Group</h2>
-{{ $group->order }}
+    <h2 class="text-xl">Ingredient group</h2>
+
     <div class="flex space-x-8">
         <div class="w-1/2">
             {{-- Title --}}
@@ -36,6 +36,11 @@
 
             <div class="mt-4">
                 <span>Ingredients:</span>
+
+                @foreach ($group->ingredients()->orderby('order', 'asc')->get() as $ingredient)
+                    <livewire:ingredient-edition :ingredient="$ingredient" :key="'ingredient'.$ingredient->id" />
+                @endforeach
+
                 <div class="flex items-center justify-start mt-4">
                     <x-button type="button" wire:click.prevent="addNewIngredient" class="bg-red-400">
                         {{ __('Add new') }}
@@ -46,7 +51,7 @@
 
         <div class="w-1/2">
             <div class="flex items-center justify-end mt-4">
-                <x-button type="button" wire:click.prevent="delete" class="bg-red-400">
+                <x-button type="button" wire:click.prevent="deleteGroup" class="bg-red-400">
                     {{ __('Delete group') }}
                 </x-button>
             </div>

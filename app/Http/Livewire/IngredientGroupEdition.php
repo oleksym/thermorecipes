@@ -44,10 +44,9 @@ class IngredientGroupEdition extends Component
         $this->group->ingredients()->save($ingredient);
     }
 
-    public function delete()
+    public function deleteGroup()
     {
-        $this->group->delete();
-        $this->emitTo('recipie-edition', 'refreshRecipie');
+        $this->emitTo('recipie-edition', 'deleteGroup', $this->group);
     }
 
     public function save()
