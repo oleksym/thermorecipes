@@ -20,13 +20,13 @@
                         {{ __('All recipies') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('tmp')" class="text-xl" :active="request()->routeIs('tmp')">
+                    {{-- <x-nav-link :href="route('tmp')" class="text-xl" :active="request()->routeIs('tmp')">
                         {{ __('Top recipies') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('tmp')" class="text-xl" :active="request()->routeIs('tmp')">
                         {{ __('New recipies') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
                                 <x-dropdown-link :href="route('logout')" class="block xl:hidden text-xl">{{ __('My recipies') }}</x-dropdown-link>
                                 <x-dropdown-link :href="route('recipies.create')" class="block xl:hidden text-xl">{{ __('Add new') }}</x-dropdown-link>
 
-                                <x-dropdown-link :href="route('logout')" class="text-xl">{{ __('Profile') }}</x-dropdown-link>
+                                {{-- <x-dropdown-link :href="route('logout')" class="text-xl">{{ __('Profile') }}</x-dropdown-link> --}}
 
                                 <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault();
@@ -121,13 +121,13 @@
                 {{ __('All recipies') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
+            {{-- <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
                 {{ __('Top recipies') }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
                 {{ __('New recipies') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
 
             @auth
                 <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
@@ -175,9 +175,9 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                        <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
+                        {{-- <x-responsive-nav-link :href="route('tmp')" :active="request()->routeIs('tmp')">
                             {{ __('Profile') }}
-                        </x-responsive-nav-link>
+                        </x-responsive-nav-link> --}}
 
                         <x-responsive-nav-link :href="route('logout')"
                                 onclick="event.preventDefault();
