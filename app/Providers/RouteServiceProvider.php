@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use App\Models\Recipe;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * The controller namespace for the application.
@@ -35,6 +36,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Route::bind('recipe_full', function ($value) {
+            return Recipe::with([
+                'ingredientGroups' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                },
+                'ingredientGroups.ingredients' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                },
+                'ingredientGroups.recipeSteps'  => function ($query) {
+                    $query->orderBy('order', 'asc');
+                },
+                'ingredientGroups.ingredients.unit'
+            ])->where('id', $value)->firstOrFail();
+        });
+
         $this->configureRateLimiting();
 
         $this->routes(function () {
