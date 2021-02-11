@@ -1,0 +1,47 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@keyframes animate-hide {
+    0% {
+        opacity: 1;
+        height: 200px;
+    }
+    100% {
+        height: 0px;
+        opacity: 0;
+    }
+}
+@keyframes animate-show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.animation-linear {
+    animation-timing-function: linear;
+}
+.animation-duration-500 {
+    animation-duration: 0.5s;
+}
+.animation-delay-1000 {
+    animation-delay: 1s;
+}
+.animate-show {
+    animation-name: animate-show;
+    animation-fill-mode: forwards;
+}
+.animate-hide {
+    animation-name: animate-hide;
+    animation-fill-mode: forwards;
+}
+
+.max-w-1\/2 {
+    max-width: 50%;
+}
+.max-50p-h-screen {
+    max-height: 50vh;
+}
