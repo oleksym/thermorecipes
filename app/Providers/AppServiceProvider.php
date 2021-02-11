@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('RecipeStepParser', function ($app) {
+            return [
+                \App\Library\RecipeStepParser\IngredientParser::class,
+            ];
+        });
     }
 
     /**

@@ -15,4 +15,9 @@ class Ingredient extends Model
     {
         return $this->belongsTo(IngredientGroup::class);
     }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class)->withDefault();
+    }
 }
