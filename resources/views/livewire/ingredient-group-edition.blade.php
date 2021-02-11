@@ -35,7 +35,7 @@
             </div>
 
             <div class="mt-4">
-                <span>Ingredients:</span>
+                <span>{{ __('Ingredients') }}:</span>
 
                 @foreach ($group->ingredients()->orderby('order', 'asc')->get() as $ingredient)
                     <livewire:ingredient-edition :ingredient="$ingredient" :key="'ingredient'.$ingredient->id" />
@@ -57,7 +57,7 @@
             </div>
 
             <div class="mt-4">
-                <span>Steps:</span>
+                <span>{{ __('Steps') }}:</span>
 
                 @foreach ($group->recipeSteps()->orderby('order', 'asc')->get() as $step)
                     <livewire:recipe-step-edition :step="$step" :key="'step'.$step->id" />

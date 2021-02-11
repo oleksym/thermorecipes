@@ -12,7 +12,7 @@
     </a>
     {{-- <a href="{{ $recipe->preview_route }}"><img src="{{ $recipe->getImageUrl() }}" class="rounded-t-lg" title="{{ $recipe->title }}" alt="{{ $recipe->title }}"></a> --}}
     <div class="px-2 py-2">
-        <h3 class="text-xl font-bold"><a href="{{ $recipe->preview_route }}">{{ $recipe->title ?? __('Untitled') }}</a></h3>
+        <h3 class="text-xl font-bold"><a href="{{ $recipe->preview_route }}">{{ Illuminate\Support\Str::limit($recipe->title, 40) ?? __('Untitled') }}</a></h3>
         <div>Duration: {{ $recipe->duration }} {{ __('min') }}</div>
         <div>Difficulty: {{ $recipe->difficulty_name }}</div>
         @if (!$recipe->published_at)

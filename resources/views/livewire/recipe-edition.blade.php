@@ -72,10 +72,10 @@
 
                                     <x-input wire:model="image" id="image" class="mt-1 w-full" type="file" />
                                     @if ($image)
-                                        <img src="{{ $image->temporaryUrl() }}" class="max-50p-h-screen">
+                                        <img src="{{ $image->temporaryUrl() }}">
                                         <x-button type="button" class="bg-red-400" wire:click.prevent="deleteFutureImage">delete temporary image</x-button>
                                     @elseif (!$delete_image_flag && $recipe->image_filename)
-                                        <img src="{{ $recipe->getImageUrl() }}" class="max-50p-h-screen">
+                                        <img src="{{ $recipe->getImageUrl() }}">
                                         <x-button type="button" class="bg-red-400" wire:click.prevent="deleteImage">delete image</x-button>
                                     @endif
 
